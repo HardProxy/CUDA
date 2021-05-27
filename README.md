@@ -2,7 +2,7 @@
 
 Programa que resolver a Equação de Sine-Gordon por meio de técnicas resolução numérica utilizadno paralelismo em GPGPU.
 
-O script.run compila e executa o programa para diferentes tamanhos de malha (1000,5000,10000)
+O script.run compila e executa o programa para diferentes tamanhos de malha (1000,5000,10000) e também para diferente flags de compilação.
 
 ## Pré-requisitos
 
