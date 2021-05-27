@@ -1,0 +1,33 @@
+#!/bin/bash
+
+for j in 1000 5000 10000;do
+
+mkdir $j
+
+cd $j
+
+cp ../kernel_model.cu .
+
+sed "s/XYXY/$j/g" kernel_model.cu > kernel.cu
+
+#Compilacao e Execucao do programa sem flags
+nvcc -o soliton.x kernel.cu
+
+( time ./soliton.x ) 2> no_flags.out
+
+#Compilacao e Execucao do prog. com flags
+for i in $(seq 1 3)
+do 
+
+nvcc -O$i -o soliton_O$i.x kernel.cu
+( time ./soliton_O$i.x ) 2> soliton_O$i.out
+
+nvcc -use_fast_math -O$i -o soliton_fast_O$i.x kernel.cu
+( time ./soliton_fast_O$i.x ) 2> soliton_fast_O$i.out
+
+nvcc -Xptxas -O$i, -o soliton_G_O$i.x kernel.cu
+( time ./soliton_G_O$i.x ) 2> soliton_G_O$i.out
+
+done
+cd .. 
+done
